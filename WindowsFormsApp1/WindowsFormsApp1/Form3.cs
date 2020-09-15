@@ -12,9 +12,11 @@ namespace WindowsFormsApp1
 {
     public partial class Form3 : Form
     {
-        public Form3()
+        public static Form1 mf = null;
+        public Form3(Form1 mf1)
         {
             InitializeComponent();
+            mf = mf1;
         }
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)

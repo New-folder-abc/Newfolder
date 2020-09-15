@@ -17,6 +17,7 @@ namespace WindowsFormsApp1
     {
         public static Form1 mf = null;
         public static Form2 f2 = null;
+        public static Form3 f3 = null;
         public static String ConnectIP = null;
 
         public const int CMD_SCREEN = 1;
@@ -38,6 +39,27 @@ namespace WindowsFormsApp1
         public const int RecvBufSize = (10 * 1024);
         cp p = new cp();
         public const int MIN_RECV_BYTES = 32;
+        public Thread TProgram = null;
+
+        // Input / Output device variables
+        public static class cKeyboard
+        {
+            public static Char key;
+        }
+
+        public static class cMouse
+        {
+            public static int x;
+            public static int y;
+            public static int buttons;
+        }
+
+        public static class cScreen
+        {
+            public static IntPtr screen;
+            public static int width;
+            public static int height;
+        }
         public Form1()
         {
             InitializeComponent();
@@ -64,11 +86,15 @@ namespace WindowsFormsApp1
 
 
             if (Connect(sender, e))
-            { }
+            {
+                f3 = new Form3(this);
+                f3.Show(this);
+            }
             else
             {
                 AppExit(sender, e);
             }
+            StartProgram(sender, e);
         }
         public void StartReceiving()
         {
@@ -288,6 +314,10 @@ namespace WindowsFormsApp1
             {
                 T.Abort();
             }
+            if (TProgram != null)
+            {
+                TProgram.Abort();
+            }
             Close();
         }
 
@@ -306,6 +336,55 @@ namespace WindowsFormsApp1
         public static void SendKey(String text)
         {
 
+        }
+
+        public void Send_p(cp p1, IntPtr data1)
+        {
+            /*
+            byte[] SendingBuffer = null;
+            TcpClient client = null;
+            lblStatus.Text = "";
+            NetworkStream netstream = null;
+            try
+            {
+                client = new TcpClient(IPA, PortN);
+                lblStatus.Text = "Connected to the Server...\n";
+                netstream = client.GetStream();
+                FileStream Fs = new FileStream(M, FileMode.Open, FileAccess.Read);
+                int NoOfPackets = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(Fs.Length) / Convert.ToDouble(SendBufferSize)));
+                progressBar1.Maximum = NoOfPackets;
+                int TotalLength = (int)Fs.Length, CurrentPacketLength, counter = 0;
+                for (int i = 0; i < NoOfPackets; i++)
+                {
+                    if (TotalLength > SendBufferSize)
+                    {
+                        CurrentPacketLength = SendBufferSize;
+                        TotalLength = TotalLength - CurrentPacketLength;
+                    }
+                    else
+                        CurrentPacketLength = TotalLength;
+                    SendingBuffer = new byte[CurrentPacketLength];
+                    Fs.Read(SendingBuffer, 0, CurrentPacketLength);
+                    netstream.Write(SendingBuffer, 0, (int)SendingBuffer.Length);
+                    if (progressBar1.Value >= progressBar1.Maximum)
+                        progressBar1.Value = progressBar1.Minimum;
+                    progressBar1.PerformStep();
+                }
+
+                lblStatus.Text = lblStatus.Text + "Sent " + Fs.Length.ToString() + " bytes to the server";
+                Fs.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                netstream.Close();
+                client.Close();
+
+            }
+            */
         }
 
         // Receive
@@ -327,6 +406,9 @@ namespace WindowsFormsApp1
         private const int MIN_COUNTER = 1;
         public static int counter = MIN_COUNTER;
         private const int MAX_COUNTER = 1000;
+        public static bool ProgramExit = false;
+        public static int NumNumbers = 0;
+        private const int MAX_NUM_NUMBERS = 100;
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (counter >= MAX_COUNTER)
@@ -336,6 +418,37 @@ namespace WindowsFormsApp1
             else
             {
                 counter++;
+            }
+        }
+
+        public void StartProgram(object sender, EventArgs e)
+        {
+            ThreadStart Ts = new ThreadStart(ProgramThread);
+            TProgram = new Thread(Ts);
+            TProgram.SetApartmentState(ApartmentState.STA);
+            TProgram.Start();
+            label6.Text = "Program is running ...";
+        }
+        public void ProgramThread()
+        {
+            SendText("RAND\n");
+            SendText("100 number random generator\n");
+            SendText("This will generate 100 numbers from 1 to 1000 on \"ENTER\" key press. Press \"ESC\" to exit. ...\n\n");
+            while (!(ProgramExit))
+            {
+                if (cKeyboard.key == (Char)Keys.Enter)
+                {
+                    SendText("Generated number: " + counter.ToString() + "\n");
+                    NumNumbers++;
+                    if (NumNumbers >= MAX_NUM_NUMBERS)
+                    {
+                        ProgramExit = true;
+                    }
+                }
+                else if (cKeyboard.key == (Char)Keys.Escape)
+                {
+                    ProgramExit = true;
+                }
             }
         }
     }
