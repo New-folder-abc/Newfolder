@@ -1,0 +1,11 @@
+C:\Users\Admin\source\repos\New folder\WindowsFormsApp1\WindowsFormsApp1\bin\x64\Release\WindowsFormsApp1.exe.config
+C:\Users\Admin\source\repos\New folder\WindowsFormsApp1\WindowsFormsApp1\bin\x64\Release\WindowsFormsApp1.exe
+C:\Users\Admin\source\repos\New folder\WindowsFormsApp1\WindowsFormsApp1\bin\x64\Release\WindowsFormsApp1.pdb
+C:\Users\Admin\source\repos\New folder\WindowsFormsApp1\WindowsFormsApp1\obj\x64\Release\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\Admin\source\repos\New folder\WindowsFormsApp1\WindowsFormsApp1\obj\x64\Release\WindowsFormsApp1.csproj.GenerateResource.cache
+C:\Users\Admin\source\repos\New folder\WindowsFormsApp1\WindowsFormsApp1\obj\x64\Release\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\New folder\WindowsFormsApp1\WindowsFormsApp1\obj\x64\Release\WindowsFormsApp1.exe
+C:\Users\Admin\source\repos\New folder\WindowsFormsApp1\WindowsFormsApp1\obj\x64\Release\WindowsFormsApp1.pdb
+C:\Users\Admin\source\repos\New folder\WindowsFormsApp1\WindowsFormsApp1\obj\x64\Release\WindowsFormsApp1.Form1.resources
+C:\Users\Admin\source\repos\New folder\WindowsFormsApp1\WindowsFormsApp1\obj\x64\Release\WindowsFormsApp1.Form2.resources
+C:\Users\Admin\source\repos\New folder\WindowsFormsApp1\WindowsFormsApp1\obj\x64\Release\WindowsFormsApp1.Form3.resources
